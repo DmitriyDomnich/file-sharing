@@ -1,0 +1,7 @@
+<div *ngIf="showOptions" class="remove-el">
+    <i title="Rename this file" (click)='renameFile()' class="bi bi-pencil"></i>
+    <i title="Remove this file" (click)='removeFile()' class="bi bi-file-earmark-x"></i>
+</div>
+<input #renameInput autofocus type="text" class="form-control" *ngIf="allowRename" [value]='file.name'>
+<span *ngIf="!allowRename">{{file.name}}</span>
+<span class="badge bg-primary rounded-pill">{{file.type}}</span>

@@ -14,6 +14,7 @@
     width: 425px;
     height: 60vh;
     min-height: 500px;
+    max-height: 600px;
     border-radius: 10px;
     background-color: $cool-grey;
     box-shadow: 0 10px 13px 5px $rhythm;
@@ -28,6 +29,10 @@
         border-radius: 10px 10px 0 0;
     }
     .file-input {
+        &:not(.files) {
+            top: 50%;
+            transform: translateY(-125%);
+        }
         .files-info {
             margin: .5em;
         }
@@ -36,6 +41,7 @@
         display: flex;
         justify-content: center;
         [type="file"] + label {
+            transition: all .5s ease-in;
             margin-bottom: auto;
             background: $imperial-red;
             border: none;
@@ -82,25 +88,9 @@
         }
         ol {
             counter-reset: files;
-            .list-group-item {
-                background-color: transparent;
-            }
-            li::before {
+            file-item::before {
                 counter-increment: files;
                 content: counter(files) ". ";
-            }
-            li {
-                text-overflow: ellipsis;
-                overflow: hidden;
-                white-space: nowrap;
-                position: relative;
-                overflow: hidden !important;
-                span {
-                    position: absolute;
-                    right: .3em;
-                    bottom: .3em;
-                    font-size: 55%;
-                }
             }
         }
     }

@@ -16,6 +16,15 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   totalSize = 0;
   fileInputSub: Subscription;
 
+  removeFile(removedFile: File) {
+    this.inputFiles$.subscribe(files => {
+      const removedFileIndex = files.findIndex(presentFile => presentFile === removedFile);
+      files.splice(removedFileIndex, 1);
+    });
+  }
+
+  constructor(private storage: AngularFireStorage) { }
+
   ngAfterViewInit(): void {
     this.fileInputSub = fromEvent(this.fileInput.nativeElement, 'change').pipe(
       withLatestFrom(this.inputFiles$),
@@ -35,12 +44,14 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     ).subscribe(value => {
       value[1].push(...value[0]);
       setTimeout(() => this.fileList.nativeElement.children.item(this.fileList.nativeElement.children.length - 1).scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-        inline: 'start'
+        behavior: 'smooth'
       }));
     });
   }
+  ngOnDestroy(): void {
+    this.fileInputSub.unsubscribe();
+  }
+
   private _checkCoincidingProperties(presentFile: File, inputtedFile: File) {
     let sameKeys = 0;
     for (const key in presentFile) {
@@ -53,10 +64,5 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     }
     return false;
   }
-
-  ngOnDestroy(): void {
-    this.fileInputSub.unsubscribe();
-  }
-  constructor(private storage: AngularFireStorage) { }
 
 }
