@@ -8,16 +8,17 @@
             <label tooltip="Press this for uploads" [delay]="250" [placement]="!files.length ? 'top' : 'left'"
                 for="file">+</label>
             <div class="files-info" *ngIf="files.length">
-                present
+                {{filesSize / 1000000 | number:'1.0-2'}} MB of 500MB
             </div>
         </div>
         <section *ngIf="files.length">
             <ol class="list-group list-group-numbered" #fileList>
-                <file-item (fileRemoved)='removeFile($event)' [file]='file' *ngFor="let file of files">
+                <file-item (fileIsBeingRenamed)='fileIsBeingRenamed($event)' (fileRemoved)='removeFile($event)'
+                    [file]='file' *ngFor="let file of files">
                 </file-item>
             </ol>
         </section>
-        <share-button *ngIf="files.length" [files]="files"></share-button>
+        <share-button *ngIf="files.length" [disabled]='(disabled$ | async).length' [files]="files"></share-button>
     </ng-template>
     <ng-container *ngTemplateOutlet="filesPresent; context: { $implicit: inputFiles$ | async }"></ng-container>
 </div>

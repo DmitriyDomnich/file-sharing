@@ -7,14 +7,15 @@ import { Component, ElementRef, EventEmitter, HostBinding, HostListener, Input, 
 })
 export class FileItemComponent implements OnInit {
 
-  showOptions = false;
   allowRename = false;
+  showOptions = false;
+  showDelete = true;
 
   @ViewChild('renameInput') renameInput: ElementRef<HTMLInputElement>;
 
   @Input() file: File;
   @Output() fileRemoved = new EventEmitter<File>();
-  @Output() fileRenamed = new EventEmitter<File>();
+  @Output() fileIsBeingRenamed = new EventEmitter<File>();
 
   removeFile() {
     this.fileRemoved.emit(this.file);
@@ -25,17 +26,19 @@ export class FileItemComponent implements OnInit {
         writable: true,
         value: this.file.name
       });
+      this.showDelete = false;
     } else {
       if (this.renameInput.nativeElement.value.split('').filter(char => char === '.').length < 2) {
         Object.defineProperty(this.file, 'name', {
           writable: true,
           value: this._getRenamedFileName()
         });
-        this.fileRenamed.emit(this.file);
       } else {
         console.log('2 .');
       }
+      this.showDelete = true;
     }
+    this.fileIsBeingRenamed.emit(this.file);
     this.allowRename = !this.allowRename;
   }
 

@@ -8,6 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ShareButtonComponent implements OnInit {
 
   @Input() files: File[];
+  @Input() disabled: boolean = false;
 
   share() {
     console.log(this.files);

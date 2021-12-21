@@ -1,8 +1,8 @@
 @use 'variables' as *;
-@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
 
 :host {
-    font-family: 'Exo 2', cursive;
+    font-family: 'Ubuntu', sans-serif;
     height: 100%;
     display: flex;
     justify-content: center;
