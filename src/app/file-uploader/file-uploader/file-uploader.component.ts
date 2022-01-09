@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { fromEvent, Observable, of, Subscription } from 'rxjs';
 import { filter, map, share } from 'rxjs/operators';
+import { FileItemState } from 'src/app/models/file-item-state';
 import { FileWithDescription } from 'src/app/models/file-with-description';
 import { FileItemComponent } from '../file-item/file-item.component';
 import { FileUploadService } from '../services/file-upload.service';
@@ -19,21 +20,21 @@ export class FileUploaderComponent implements OnInit, AfterViewInit, OnDestroy {
   disabled$: Observable<File[]> = of([]).pipe(share());
   filesWithDescriptions: FileWithDescription[];
   presentFiles: File[] = [];
-  uploading = false;
+
 
   fileInputSub: Subscription;
 
   uploadEnded() {
-    this.uploading = false;
+    this.setUploadState('waiting');
   }
   fileUploaded(uploadedFileIndex: number) {
     this.fileList.nativeElement.children.item(uploadedFileIndex).scrollIntoView({
       behavior: 'smooth',
     });
-    this.fileItemComponents.get(uploadedFileIndex).uploaded = true;
+    this.fileItemComponents.get(uploadedFileIndex).state = 'uploaded';
   }
   getFilesDescriptions(): void {
-    this.uploading = true;
+    this.setUploadState('uploading');
     this.filesWithDescriptions = this.fileItemComponents
       .toArray()
       .map((fileItemComponent) => ({
@@ -95,7 +96,9 @@ export class FileUploaderComponent implements OnInit, AfterViewInit, OnDestroy {
   trackByName(index: number, file: File) {
     return file.name;
   }
-
+  private setUploadState(state: FileItemState) {
+    this.fileItemComponents.forEach(fileItemComponent => fileItemComponent.state = state);
+  }
   private _checkCoincidingProperties(presentFile: File, inputtedFile: File) {
     let sameKeys = 0;
     for (const key in presentFile) {

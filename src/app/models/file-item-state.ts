@@ -1,0 +1,1 @@
+export type FileItemState = 'uploading' | 'uploaded' | 'waiting';

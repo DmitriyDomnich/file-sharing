@@ -1,6 +1,7 @@
 import { Component, ElementRef, EventEmitter, HostBinding, HostListener, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { FileItemState } from 'src/app/models/file-item-state';
 import { FileUploadService } from '../services/file-upload.service';
 
 @Component({
@@ -15,11 +16,10 @@ export class FileItemComponent implements OnInit, OnDestroy {
   showDelete = true;
   isCollapsed = false;
   description: string;
-  uploaded = false;
+  state: FileItemState = 'waiting';
 
   @ViewChild('renameInput') renameInput: ElementRef<HTMLInputElement>;
   @Input() file: File;
-  @Input() isUploading: boolean;
   @Output() fileRemoved = new EventEmitter<File>();
   @Output() fileIsBeingRenamed = new EventEmitter<File>();
   sub: Subscription;
@@ -61,17 +61,17 @@ export class FileItemComponent implements OnInit, OnDestroy {
     return 'list-group-item';
   }
   @HostBinding('class.uploaded') get uploadedClassName() {
-    return this.uploaded;
+    return this.state === 'uploaded';
   }
   @HostListener('mouseenter') onHover() {
-    if (!this.isUploading)
+    if (this.state === 'waiting')
       this.showOptions = !this.showOptions;
   }
   @HostListener('mouseleave') onLeave() {
     this.showOptions = false;
   }
   @HostListener('click', ["$event"]) changeCollapse(ev: MouseEvent) {
-    if (this.isUploading) {
+    if (this.state !== 'waiting') {
       return;
     }
     if ((ev.target as HTMLElement).closest('#collapse-content')) {
@@ -86,8 +86,10 @@ export class FileItemComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.sub = this.fileUploadService.updateProgress.pipe(filter(updProgress => !updProgress))
-      .subscribe(_ => this.uploaded = false);
+    this.sub = this.fileUploadService.updateProgress.pipe(filter(updateProgress => !updateProgress))
+      .subscribe(_ => {
+        this.state = 'waiting';
+      });
   }
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
