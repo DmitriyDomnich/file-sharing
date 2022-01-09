@@ -1,0 +1,11 @@
+<div class="files-info" *ngIf="files.length">
+  <span>
+   {{filesSize | size:maxFileSize}}
+  </span>
+  <ng-container *ngIf="(uploadProgress$ | async) as uploadProgress">
+    <h5 class="text-truncate">
+      {{ uploadProgress.index }}. {{ uploadProgress.fileName }}
+    </h5>
+    <progressbar [value]="uploadProgress.progress"></progressbar>
+  </ng-container>
+</div>

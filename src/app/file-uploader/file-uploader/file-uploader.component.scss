@@ -1,0 +1,87 @@
+@use "variables";
+@use "scrollbar";
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+
+:host {
+  font-family: 'Ubuntu', sans-serif;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container {
+  position: relative;
+  padding: 0;
+  width: 425px;
+  height: 60vh;
+  min-height: 500px;
+  max-height: 600px;
+  border-radius: 10px;
+  background-color: variables.$cool-grey;
+  box-shadow: 0 10px 13px 5px variables.$rhythm;
+  header {
+    user-select: none;
+    color: variables.$liberty;
+    font-size: 2em;
+    background-color: variables.$mint-cream;
+    width: 100%;
+    text-align: center;
+    padding: 0;
+    border-radius: 10px 10px 0 0;
+  }
+  .file-input {
+    &:not(.files) {
+      top: 50%;
+      transform: translateY(-125%);
+    }
+    margin: 0.5em;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    [type='file'] + label {
+      margin-bottom: auto;
+      background: variables.$imperial-red;
+      border: none;
+      border-radius: 50%;
+      color: #fff;
+      padding: 1em 0.75em;
+      cursor: pointer;
+      display: inline-block;
+      font-family: 'Rubik', sans-serif;
+      font-weight: 500;
+      outline: none;
+      font-size: 2.3em;
+      line-height: 0;
+      position: relative;
+      transition: all 0.4s;
+      &:hover {
+        background-color: variables.$liberty;
+        box-shadow: 0 0 5px 3px variables.$cyclamen;
+      }
+    }
+    input {
+      width: 0;
+      height: 0;
+    }
+  }
+  .files {
+    justify-content: flex-start;
+  }
+  section {
+    max-height: 60%;
+    overflow: auto;
+    @include scrollbar.scrollBar(0.5em);
+    ol {
+      counter-reset: files;
+      file-item::before {
+        counter-increment: files;
+        content: counter(files) '. ';
+      }
+    }
+  }
+}
+@media (max-width: 450px) {
+  .container {
+    width: 350px;
+  }
+}

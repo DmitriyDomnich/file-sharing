@@ -1,17 +1,12 @@
-@use 'variables' as *;
+@use "variables" as *;
 @import "~bootstrap/scss/bootstrap";
 @import "bootstrap-icons/font/bootstrap-icons.css";
 
-html, body {
-    background-color: $space-cadet !important;
-    height: 100vh !important;
+html,
+body {
+  background-color: $space-cadet !important;
+  height: 100vh !important;
 }
-/* Importing Bootstrap SCSS file. */
-// .remove-li {
-//     position: absolute;
-//     top: .2em;
-//     right: .5em;
-//     width: 10%;
-//     height: 10%;
-//     color: #b61717;
-// }
+.progress-bar {
+  transition: width 0.05s ease;
+}

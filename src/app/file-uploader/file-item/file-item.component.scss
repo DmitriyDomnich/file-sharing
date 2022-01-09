@@ -1,0 +1,67 @@
+@use "variables";
+@use "scrollbar" as sc;
+:host {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden !important;
+  background-color: transparent;
+  padding-right: 3em;
+  padding-bottom: 1.2em;
+  color: variables.$text-color;
+  cursor: pointer;
+}
+:host(.uploaded) {
+  background-color: lime;
+}
+input {
+  background-color: transparent;
+  display: inline-block;
+  position: relative;
+  width: 85%;
+}
+.input-group {
+  display: flex;
+  width: 110%;
+  cursor: auto;
+  .input-group-text {
+    background-color: variables.$onyx;
+  }
+  textarea {
+    @include sc.scrollBar(0.3em);
+    height: 7em;
+    resize: none;
+    background-color: variables.$onyx;
+  }
+  textarea:focus {
+    z-index: 0;
+    background-color: variables.$onyx;
+  }
+  span:last-child {
+    font-size: 0.5rem;
+    position: absolute;
+    bottom: 0.3em;
+    right: 1em;
+    cursor: default;
+  }
+}
+
+input:focus {
+  background-color: transparent;
+}
+.remove-el {
+  cursor: pointer;
+  position: absolute;
+  top: 0.2em;
+  right: 0.5em;
+  color: #b61717;
+  i {
+    margin: 0 0.3em;
+  }
+}
+:host > span:last-child {
+  position: absolute;
+  right: 0.3em;
+  bottom: 0.3em;
+  font-size: 55%;
+}

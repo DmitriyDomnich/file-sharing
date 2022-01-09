@@ -1,0 +1,10 @@
+.files-info {
+  position: relative;
+  margin: 0.5em;
+  display: flex;
+  flex-direction: column;
+}
+:host {
+  flex: 1;
+  overflow: hidden;
+}
