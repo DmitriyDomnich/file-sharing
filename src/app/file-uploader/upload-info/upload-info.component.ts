@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { distinctUntilChanged, tap } from 'rxjs/operators';
 import { UploadProgress } from 'src/app/models/upload-progress';
@@ -15,9 +15,9 @@ export class UploadInfoComponent implements OnInit, OnChanges {
 
   @Output() fileUploaded = new EventEmitter<number>();
   filesSize = 0;
-  uploadProgress$: Observable<UploadProgress | null>;
+  uploadProgress$: Observable<UploadProgress>;
 
-  constructor(private fileUploadService: FileUploadService) {}
+  constructor(private fileUploadService: FileUploadService) { }
 
   ngOnInit(): void {
     this.uploadProgress$ = this.fileUploadService.updateProgress
@@ -27,7 +27,8 @@ export class UploadInfoComponent implements OnInit, OnChanges {
           if (updateProgress?.isUploaded) {
             this.fileUploaded.emit(updateProgress.index - 1);
           }
-        }));
+        })
+      );
   }
   ngOnChanges(): void {
     this.filesSize = this._countFilesSize();

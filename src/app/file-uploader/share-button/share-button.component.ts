@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { combineLatest, from, of } from 'rxjs';
-import { concatMap } from 'rxjs/operators';
+import { UploadTask } from '@angular/fire/compat/storage/interfaces';
+import { combineLatest, from, Observable, of, throwError } from 'rxjs';
+import { catchError, concatMap } from 'rxjs/operators';
 import { v4 } from 'uuid';
 import { FileWithDescription } from '../../models/file-with-description';
 import { FileUploadService } from '../services/file-upload.service';
@@ -15,13 +16,18 @@ export class ShareButtonComponent implements OnInit {
   @Input() files: FileWithDescription[];
   @Input() disabled: boolean = false;
   @Output() getFilesDescriptions = new EventEmitter<void>();
+  @Output() uploadEnded = new EventEmitter();
+  filesUploading = false;
+  currentUploadingFile: Observable<UploadTask>;
 
   share() {
     this.getFilesDescriptions.emit();
     const folderId = v4();
 
+    this.filesUploading = true;
+    this.currentUploadingFile = this.fileUploadService.uploadingFile;
     setTimeout(() => {
-      const sub = from(this.files).pipe(
+      from(this.files).pipe(
         concatMap((fileWithDescription, index) => {
           fileWithDescription.index = index + 1;
           return combineLatest([
@@ -32,25 +38,39 @@ export class ShareButtonComponent implements OnInit {
                   description: fileWithDescription.description
                 }
               }
-            ).percentageChanges(),
+            ).snapshotChanges(),
             of(fileWithDescription)
           ]);
+        }),
+        catchError(err => {
+          this.fileUploadService.updateProgress.emit(null);
+          return throwError(() => new Error('User stopped uploading.'));
         })
       ).subscribe({
         next: fileUpload => {
-          const [uploadPercentage, fileWithDescription] = fileUpload;
+          if (fileUpload) {
+            const [uploadTaskSnapshot, fileWithDescription] = fileUpload;
+            const uploadProgress = (uploadTaskSnapshot.bytesTransferred / uploadTaskSnapshot.totalBytes) * 100;
 
-          this.fileUploadService.updateProgress.emit({
-            fileName: fileWithDescription.file.name,
-            index: fileWithDescription.index,
-            progress: uploadPercentage,
-            isUploaded: uploadPercentage === 100
-          });
+            this.fileUploadService.updateProgress.emit({
+              fileName: fileWithDescription.file.name,
+              index: fileWithDescription.index,
+              progress: uploadProgress,
+              isUploaded: uploadProgress === 100
+            });
+            this.fileUploadService.uploadingFile.emit(uploadTaskSnapshot.task);
+          }
+        },
+        error: err => {
+          this.filesUploading = false;
+          this.uploadEnded.emit();
+          this.fileUploadService.updateProgress.emit(null);
         },
         complete: () => {
+          this.filesUploading = false;
+          this.uploadEnded.emit();
           this.fileUploadService.updateProgress.emit(null);
-          sub.unsubscribe();
-        },
+        }
       });
     });
   }
@@ -59,5 +79,6 @@ export class ShareButtonComponent implements OnInit {
     private storage: AngularFireStorage,
     private fileUploadService: FileUploadService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+  }
 }

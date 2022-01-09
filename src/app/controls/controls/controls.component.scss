@@ -1,0 +1,13 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+  position: relative;
+}
+i {
+  position: relative;
+  margin: .5em;
+  top: .5em;
+  cursor: pointer;
+}

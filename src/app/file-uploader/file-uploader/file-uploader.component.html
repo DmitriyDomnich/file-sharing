@@ -7,16 +7,18 @@
         <label tooltip="Press this for uploads" [delay]="250" [placement]="!files.length ? 'top' : 'left'"
           for="file">+</label>
       </div>
-      <upload-info (fileUploaded)='fileUploaded($event)' *ngIf='presentFiles.length' [maxFileSize]='maxFileSize' [files]="presentFiles"></upload-info>
+      <upload-info (fileUploaded)='fileUploaded($event)' *ngIf='presentFiles.length' [maxFileSize]='maxFileSize'
+        [files]="presentFiles"></upload-info>
     </div>
     <section *ngIf="files.length">
       <ol class="list-group list-group-numbered" #fileList>
-        <file-item (fileIsBeingRenamed)="fileIsBeingRenamed($event)" (fileRemoved)="removeFile($event)"
-          [file]="file" *ngFor="let file of files; trackBy: trackByName"></file-item>
+        <file-item [isUploading]='uploading' (fileIsBeingRenamed)="fileIsBeingRenamed($event)"
+          (fileRemoved)="removeFile($event)" [file]="file" *ngFor="let file of files; trackBy: trackByName"></file-item>
       </ol>
     </section>
-    <share-button [files]="filesWithDescriptions" (getFilesDescriptions)="getFilesDescriptions()"
-      *ngIf="files.length" [disabled]="(disabled$ | async).length"></share-button>
+    <share-button (uploadEnded)='uploadEnded()' [files]="filesWithDescriptions"
+      (getFilesDescriptions)="getFilesDescriptions()" *ngIf="files.length" [disabled]="(disabled$ | async).length">
+    </share-button>
   </ng-template>
   <ng-container *ngTemplateOutlet="filesPresent context: { $implicit: presentFiles }"></ng-container>
 </div>

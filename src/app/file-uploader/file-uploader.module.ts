@@ -9,6 +9,7 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { UploadInfoComponent } from './upload-info/upload-info.component';
 import { SizePipe } from './size.pipe';
+import { ControlsModule } from '../controls/controls.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { SizePipe } from './size.pipe';
     FormsModule,
     CollapseModule,
     ProgressbarModule,
+    ControlsModule
   ],
   exports: [FileUploaderComponent],
 })
-export class FileUploaderModule {}
+export class FileUploaderModule { }

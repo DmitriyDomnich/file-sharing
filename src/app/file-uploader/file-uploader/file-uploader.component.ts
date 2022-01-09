@@ -19,9 +19,13 @@ export class FileUploaderComponent implements OnInit, AfterViewInit, OnDestroy {
   disabled$: Observable<File[]> = of([]).pipe(share());
   filesWithDescriptions: FileWithDescription[];
   presentFiles: File[] = [];
+  uploading = false;
 
   fileInputSub: Subscription;
 
+  uploadEnded() {
+    this.uploading = false;
+  }
   fileUploaded(uploadedFileIndex: number) {
     this.fileList.nativeElement.children.item(uploadedFileIndex).scrollIntoView({
       behavior: 'smooth',
@@ -29,6 +33,7 @@ export class FileUploaderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.fileItemComponents.get(uploadedFileIndex).uploaded = true;
   }
   getFilesDescriptions(): void {
+    this.uploading = true;
     this.filesWithDescriptions = this.fileItemComponents
       .toArray()
       .map((fileItemComponent) => ({
