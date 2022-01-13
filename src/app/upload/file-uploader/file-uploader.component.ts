@@ -1,10 +1,10 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { fromEvent, Observable, of, Subscription } from 'rxjs';
 import { filter, map, share } from 'rxjs/operators';
-import { FileItemState } from 'src/app/models/file-item-state';
+import { UploadState } from 'src/app/models/upload-state';
 import { FileWithDescription } from 'src/app/models/file-with-description';
-import { FileItemComponent } from '../file-item/file-item.component';
-import { FileUploadService } from '../services/file-upload.service';
+import { FileItemComponent } from './file-item/file-item.component';
+import { FileUploadService } from './services/file-upload.service';
 
 @Component({
   selector: 'file-uploader',
@@ -37,13 +37,13 @@ export class FileUploaderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.setUploadState('uploading');
     this.filesWithDescriptions = this.fileItemComponents
       .toArray()
-      .map((fileItemComponent) => ({
+      .map(fileItemComponent => ({
         file: fileItemComponent.file,
         description: fileItemComponent.description
       }));
   }
   fileIsBeingRenamed(renamingFile: File) {
-    this.disabled$.subscribe((disabledFiles) => {
+    this.disabled$.subscribe(disabledFiles => {
       const file = disabledFiles.find(disabledFile => renamingFile === disabledFile);
 
       if (file) {
@@ -81,12 +81,11 @@ export class FileUploaderComponent implements OnInit, AfterViewInit, OnDestroy {
     ).subscribe((newFiles: File[]) => {
       this.fileUploadService.addFiles(this.presentFiles, newFiles);
 
-      setTimeout(() =>
-        this.fileList.nativeElement.children
-          .item(this.fileList.nativeElement.children.length - 1)
-          .scrollIntoView({
-            behavior: 'smooth',
-          })
+      setTimeout(() => this.fileList.nativeElement.children
+        .item(this.fileList.nativeElement.children.length - 1)
+        .scrollIntoView({
+          behavior: 'smooth',
+        })
       );
     });
   }
@@ -96,7 +95,7 @@ export class FileUploaderComponent implements OnInit, AfterViewInit, OnDestroy {
   trackByName(index: number, file: File) {
     return file.name;
   }
-  private setUploadState(state: FileItemState) {
+  private setUploadState(state: UploadState) {
     this.fileItemComponents.forEach(fileItemComponent => fileItemComponent.state = state);
   }
   private _checkCoincidingProperties(presentFile: File, inputtedFile: File) {

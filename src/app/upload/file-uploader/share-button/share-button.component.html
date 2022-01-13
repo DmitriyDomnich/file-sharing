@@ -1,0 +1,16 @@
+<ng-container [ngSwitch]="state">
+  <ng-container *ngSwitchCase="'waiting'">
+    <button (click)="share()" [disabled]="disabled" type="button" class="btn share btn-lg">
+      Create a link for sending files
+    </button>
+  </ng-container>
+  <ng-container *ngSwitchCase='"uploading"'>
+    <controls [uploadTask]='currentUploadingFile$ | async'>
+    </controls>
+  </ng-container>
+  <ng-container *ngSwitchCase="'uploaded'">
+    <button (click)="copy()" [popover]="'Copied to clipboard'" type="button" class="btn copy btn-lg">Click to copy file
+      share
+      link</button>
+  </ng-container>
+</ng-container>

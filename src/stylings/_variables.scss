@@ -8,3 +8,13 @@ $rhythm: #23252f;
 $green_yellow: #ccff66;
 $text-color: #483d3f;
 $onyx: #b5ffe1;
+
+$rich-black: #030301;
+$eerie-black: #222222;
+
+@mixin mint-cream($opacity) {
+  background-color: rgb(244, 255, 248, $opacity);
+}
+@mixin radical-red($opacity) {
+  background-color: rgb(255, 67, 101, $opacity);
+}

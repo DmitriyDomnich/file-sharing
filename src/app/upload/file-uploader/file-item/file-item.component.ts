@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, HostBinding, HostListener, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { FileItemState } from 'src/app/models/file-item-state';
+import { UploadState } from 'src/app/models/upload-state';
 import { FileUploadService } from '../services/file-upload.service';
 
 @Component({
@@ -11,17 +11,18 @@ import { FileUploadService } from '../services/file-upload.service';
 })
 export class FileItemComponent implements OnInit, OnDestroy {
 
+  @ViewChild('renameInput') renameInput: ElementRef<HTMLInputElement>;
+  @Input() file: File;
+  @Output() fileRemoved = new EventEmitter<File>();
+  @Output() fileIsBeingRenamed = new EventEmitter<File>();
+
   allowRename = false;
   showOptions = false;
   showDelete = true;
   isCollapsed = false;
   description: string;
-  state: FileItemState = 'waiting';
+  state: UploadState = 'waiting';
 
-  @ViewChild('renameInput') renameInput: ElementRef<HTMLInputElement>;
-  @Input() file: File;
-  @Output() fileRemoved = new EventEmitter<File>();
-  @Output() fileIsBeingRenamed = new EventEmitter<File>();
   sub: Subscription;
 
   removeFile() {
@@ -88,7 +89,7 @@ export class FileItemComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.sub = this.fileUploadService.updateProgress.pipe(filter(updateProgress => !updateProgress))
       .subscribe(_ => {
-        this.state = 'waiting';
+        this.state = 'waiting'
       });
   }
   ngOnDestroy(): void {

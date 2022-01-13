@@ -1,0 +1,27 @@
+:host {
+  position: relative;
+  color: aliceblue;
+  margin: 1em 0;
+}
+form {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    text-align: center;
+    font-size: 1.8em;
+  }
+  input {
+    line-height: 1.5;
+    outline: none;
+    padding: .3em;
+    font-size: 1.5em;
+    border-radius: 20px;
+    border: none;
+    margin: .2em 0;
+    text-align: center;
+  }
+  button {
+    margin: .5em 0;
+  }
+}

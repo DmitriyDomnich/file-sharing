@@ -1,11 +1,14 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { UploadTask } from '@angular/fire/compat/storage/interfaces';
-import { combineLatest, from, Observable, of, throwError } from 'rxjs';
+import { combineLatest, from, Observable, of, throwError, timer } from 'rxjs';
 import { catchError, concatMap } from 'rxjs/operators';
 import { v4 } from 'uuid';
-import { FileWithDescription } from '../../models/file-with-description';
+import { FileWithDescription } from 'src/app/models/file-with-description';
 import { FileUploadService } from '../services/file-upload.service';
+import { UploadState } from "src/app/models/upload-state";
+import { Clipboard } from '@angular/cdk/clipboard';
+import { PopoverDirective } from 'ngx-bootstrap/popover';
 
 @Component({
   selector: 'share-button',
@@ -14,24 +17,36 @@ import { FileUploadService } from '../services/file-upload.service';
 })
 export class ShareButtonComponent implements OnInit {
   @Input() files: FileWithDescription[];
-  @Input() disabled: boolean = false;
+  @Input() disabled: boolean;
   @Output() getFilesDescriptions = new EventEmitter<void>();
-  @Output() uploadEnded = new EventEmitter();
-  filesUploading = false;
-  currentUploadingFile: Observable<UploadTask>;
+  @Output() uploadEnded = new EventEmitter<void>();
 
+  @ViewChild(PopoverDirective) popover: PopoverDirective;
+
+  state: UploadState = 'waiting';
+  currentUploadingFile$: Observable<UploadTask>;
+  filesLink: string;
+  copy() {
+    this.clipboard.copy(this.filesLink);
+    timer(800).subscribe({
+      next: _ => {
+        this.popover.hide();
+        this.state = 'waiting';
+      }
+    })
+  }
   share() {
     this.getFilesDescriptions.emit();
-    const folderId = v4();
+    this.filesLink = v4().slice(0, 25);
 
-    this.filesUploading = true;
-    this.currentUploadingFile = this.fileUploadService.uploadingFile;
+    this.state = 'uploading';
+    this.currentUploadingFile$ = this.fileUploadService.uploadingFile;
     setTimeout(() => {
       from(this.files).pipe(
         concatMap((fileWithDescription, index) => {
           fileWithDescription.index = index + 1;
           return combineLatest([
-            this.storage.upload(`${folderId}/${fileWithDescription.file.name}`,
+            this.storage.upload(`${this.filesLink}/${fileWithDescription.file.name}`,
               fileWithDescription.file,
               {
                 customMetadata: {
@@ -43,7 +58,6 @@ export class ShareButtonComponent implements OnInit {
           ]);
         }),
         catchError(err => {
-          this.fileUploadService.updateProgress.emit(null);
           return throwError(() => new Error('User stopped uploading.'));
         })
       ).subscribe({
@@ -62,12 +76,12 @@ export class ShareButtonComponent implements OnInit {
           }
         },
         error: err => {
-          this.filesUploading = false;
+          this.state = 'waiting';
           this.uploadEnded.emit();
           this.fileUploadService.updateProgress.emit(null);
         },
         complete: () => {
-          this.filesUploading = false;
+          this.state = 'uploaded';
           this.uploadEnded.emit();
           this.fileUploadService.updateProgress.emit(null);
         }
@@ -77,7 +91,8 @@ export class ShareButtonComponent implements OnInit {
 
   constructor(
     private storage: AngularFireStorage,
-    private fileUploadService: FileUploadService) { }
+    private fileUploadService: FileUploadService,
+    private clipboard: Clipboard) { }
 
   ngOnInit(): void {
   }

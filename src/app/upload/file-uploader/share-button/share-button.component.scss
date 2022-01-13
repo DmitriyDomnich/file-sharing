@@ -1,0 +1,29 @@
+@use 'variables' as *;
+
+:host {
+  position: absolute;
+  width: 100%;
+  bottom: 1em;
+}
+button {
+  display: block;
+  width: 80%;
+  margin: 0 auto;
+}
+.copy {
+  transition: background-color 250ms ease;
+  color: $rich-black;
+  @include radical-red(1);
+  &:hover {
+    @include radical-red(0.8);
+  }
+}
+
+.share {
+  transition: background-color 250ms ease;
+  color: $eerie-black;
+  @include mint-cream(1);
+  &:hover {
+    @include mint-cream(0.8);
+  }
+}

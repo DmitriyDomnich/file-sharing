@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
-import { FileUploaderModule } from './file-uploader/file-uploader.module';
+import { UploadModule } from './upload/upload.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,9 +16,9 @@ import { FileUploaderModule } from './file-uploader/file-uploader.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     AngularFireStorageModule,
-    FileUploaderModule,
+    UploadModule
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

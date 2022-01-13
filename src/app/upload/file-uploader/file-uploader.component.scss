@@ -2,13 +2,6 @@
 @use "scrollbar";
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
 
-:host {
-  font-family: 'Ubuntu', sans-serif;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 .container {
   position: relative;
   padding: 0;

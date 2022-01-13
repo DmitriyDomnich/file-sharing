@@ -1,5 +1,0 @@
-<button *ngIf="!filesUploading; else controls" (click)="share()" [disabled]="disabled" type="button" class="btn btn-lg">
-  Create a link for sending files</button>
-<ng-template #controls>
-  <controls [uploadTask]='currentUploadingFile | async'></controls>
-</ng-template>

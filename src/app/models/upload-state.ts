@@ -1,0 +1,1 @@
+export type UploadState = 'uploading' | 'uploaded' | 'waiting';

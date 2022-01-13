@@ -12,8 +12,8 @@ import { FileUploadService } from '../services/file-upload.service';
 export class UploadInfoComponent implements OnInit, OnChanges {
   @Input() files: File[];
   @Input() maxFileSize: number;
-
   @Output() fileUploaded = new EventEmitter<number>();
+
   filesSize = 0;
   uploadProgress$: Observable<UploadProgress>;
 

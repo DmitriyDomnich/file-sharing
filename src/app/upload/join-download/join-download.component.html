@@ -1,0 +1,6 @@
+<form (submit)="joinDownload($event)">
+  <label for="room">Enter id</label>
+  <input #input autocomplete="off" type="text" name="room">
+  <button type="submit" class="btn btn-info">Join</button>
+  <ng-container *ngIf=""></ng-container>
+</form>
