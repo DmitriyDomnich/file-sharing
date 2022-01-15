@@ -1,0 +1,50 @@
+@use 'variables' as *;
+
+:host {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  color: $mint-cream;
+  h2 {
+    color: $imperial-red;
+  }
+  .wrapper {
+    position: relative;
+    background-color: $cool-grey;
+    height: 60vh;
+    padding: 2em;
+    padding-top: 1em;
+    margin: 1em;
+    border-radius: 20px;
+    min-width: 450px;
+    max-width: 600px;
+    width: 50vw;
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 0 10px 5px rgba(25, 25, 25, 0.486);
+    font-size: 1.3em;
+    .spinner-border {
+      margin: auto 0;
+      height: 3em;
+      width: 3em;
+    }
+    ol {
+      max-height: 80%;
+    }
+    footer {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      bottom: 0;
+      min-height: 3em;
+      border-top: 2px solid $cyclamen;
+    }
+  }
+}

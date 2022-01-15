@@ -87,10 +87,9 @@ export class FileItemComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.sub = this.fileUploadService.updateProgress.pipe(filter(updateProgress => !updateProgress))
-      .subscribe(_ => {
-        this.state = 'waiting'
-      });
+    this.sub = this.fileUploadService.updateProgress
+      .pipe(filter(updateProgress => !updateProgress))
+      .subscribe(_ => this.state = 'waiting');
   }
   ngOnDestroy(): void {
     this.sub?.unsubscribe();

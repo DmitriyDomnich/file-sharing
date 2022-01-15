@@ -1,15 +1,14 @@
 @use 'variables' as *;
 @import "~bootstrap/scss/bootstrap";
 @import "bootstrap-icons/font/bootstrap-icons.css";
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
 
 html,
 body {
   background-color: $space-cadet !important;
   height: 100vh !important;
+  font-family: 'Ubuntu', sans-serif;
 }
 .progress-bar {
   transition: width 0.05s ease;
 }
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

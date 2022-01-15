@@ -1,1 +1,18 @@
-{{id | json}}
+<h2>
+  Get files
+</h2>
+<div class="wrapper">
+  <ng-container *ngIf="files$ | async as files; else loading">
+    <ol>
+      <li *ngFor="let file of files">
+        <file-download-item [file]='file'></file-download-item>
+      </li>
+    </ol>
+    <footer>
+      <button (click)="downloadAll()" class="btn btn-lg btn-info">Download all files</button>
+    </footer>
+  </ng-container>
+  <ng-template #loading>
+    <div class="spinner-border" role="status"></div>
+  </ng-template>
+</div>

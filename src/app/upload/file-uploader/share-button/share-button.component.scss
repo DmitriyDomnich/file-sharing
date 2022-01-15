@@ -22,8 +22,8 @@ button {
 .share {
   transition: background-color 250ms ease;
   color: $eerie-black;
-  @include mint-cream(1);
+  @include mint-cream(1, background-color);
   &:hover {
-    @include mint-cream(0.8);
+    @include mint-cream(0.8, background-color);
   }
 }

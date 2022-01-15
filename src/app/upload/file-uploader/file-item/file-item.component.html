@@ -1,16 +1,15 @@
-<div *ngIf="showOptions" class="remove-el">
-    <i title="Rename this file" (click)='renameFile($event)' class="bi bi-pencil"></i>
-    <i title="Remove this file" *ngIf="showDelete" (click)='removeFile()' class="bi bi-file-earmark-x"></i>
-</div>
 <input #renameInput autofocus type="text" class="form-control" *ngIf="allowRename"
-    [value]='file.name.slice(0, file.name.lastIndexOf("."))'>
+  [value]='file.name.slice(0, file.name.lastIndexOf("."))'>
+<div *ngIf="showOptions" class="options">
+  <i title="Rename this file" (click)='renameFile($event)' class="bi bi-pencil"></i>
+  <i title="Remove this file" *ngIf="showDelete" (click)='removeFile()' class="bi bi-file-earmark-x"></i>
+</div>
 <span title="Add or change file description" *ngIf="!allowRename">{{file.name}}</span>
 <div id="collapse-content" [collapse]="!isCollapsed" [isAnimated]="true">
-    <div class="input-group">
-        <span class="input-group-text">Description</span>
-        <textarea #textarea [(ngModel)]="description" maxlength="100" class="form-control">
-        </textarea>
-        <span>{{textarea.value.length}}/100</span>
-    </div>
+  <div class="input-group">
+    <span class="input-group-text">Description</span>
+    <textarea #textarea [(ngModel)]="description" maxlength="100" class="form-control"></textarea>
+    <span>{{textarea.value.length}}/100</span>
+  </div>
 </div>
 <span class="badge bg-primary rounded-pill">{{file.type}}</span>

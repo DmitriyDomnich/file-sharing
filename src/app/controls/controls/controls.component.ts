@@ -12,7 +12,6 @@ export class ControlsComponent implements OnChanges {
   constructor() { }
 
   ngOnChanges(): void {
-    console.log(this.uploadTask);
 
   }
 

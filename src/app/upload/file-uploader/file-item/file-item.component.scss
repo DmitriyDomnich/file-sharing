@@ -1,5 +1,5 @@
 @use "variables";
-@use "scrollbar" as sc;
+@use "scrollbar" as *;
 :host {
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -28,7 +28,7 @@ input {
     background-color: variables.$onyx;
   }
   textarea {
-    @include sc.scrollBar(0.3em);
+    @include scrollBar(0.3em);
     height: 7em;
     resize: none;
     background-color: variables.$onyx;
@@ -49,7 +49,7 @@ input {
 input:focus {
   background-color: transparent;
 }
-.remove-el {
+.options {
   cursor: pointer;
   position: absolute;
   top: 0.2em;
@@ -59,7 +59,7 @@ input:focus {
     margin: 0 0.3em;
   }
 }
-:host > span:last-child {
+.rounded-pill {
   position: absolute;
   right: 0.3em;
   bottom: 0.3em;

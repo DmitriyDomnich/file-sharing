@@ -7,7 +7,7 @@ const routes: Routes = [
   { component: UploadComponent, path: '' },
   {
     loadChildren: () => import('./download/download.module').then(m => m.DownloadModule),
-    path: 'room/:id', canActivate: [DownloadGuard], pathMatch: 'full'
+    path: 'room/:id', canActivate: [DownloadGuard]
   }
 ];
 
