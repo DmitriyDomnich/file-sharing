@@ -1,0 +1,1 @@
+export type DownloadState = 'waiting' | 'downloads_one_by_one' | number;

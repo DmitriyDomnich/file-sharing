@@ -28,7 +28,7 @@ export class DownloadDirective implements OnInit {
       includeDownloadProgress: true,
       body: this.downloadInfo.fileName
     }).pipe(
-      tap(ajaxResponse => this.downloadProgress.emit((ajaxResponse.loaded / ajaxResponse.total) * 100)),
+      tap(ajaxResponse => this.downloadProgress.emit(ajaxResponse.loaded / ajaxResponse.total * 100)),
       filter(ajaxResponse => ajaxResponse.type === 'download_load')
     ).subscribe({
       next: ajaxProgress => {

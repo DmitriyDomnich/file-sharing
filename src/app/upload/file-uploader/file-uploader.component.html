@@ -3,8 +3,9 @@
   <ng-template #filesPresent let-files>
     <div class="file-input" [class.files]="files.length">
       <div>
-        <input type="file" id="file" name="file" multiple #fileInput />
-        <label tooltip="Press this for uploads" [delay]="250" [placement]="!files.length ? 'top' : 'left'"
+        <input [disabled]="uploadingFiles" type="file" id="file" name="file" multiple #fileInput />
+        <label [isDisabled]='uploadingFiles' [style.cursor]="uploadingFiles ? 'default' : 'pointer'"
+          tooltip="Press this for uploads" [delay]="250" [placement]="!files.length ? 'top' : 'left'"
           for="file">+</label>
       </div>
       <upload-info (fileUploaded)='fileUploaded($event)' *ngIf='presentFiles.length' [maxFileSize]='maxFileSize'

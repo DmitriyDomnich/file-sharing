@@ -3,16 +3,23 @@
 </h2>
 <div class="wrapper">
   <ng-container *ngIf="files$ | async as files; else loading">
-    <ol>
-      <li *ngFor="let file of files">
-        <file-download-item [file]='file'></file-download-item>
-      </li>
-    </ol>
+    <main>
+      <ol *ngIf="!(downloadState >= 0); else zipping">
+        <li *ngFor="let file of files; let i = index">
+          <file-download-item [index]='i' [file]='file'></file-download-item>
+        </li>
+      </ol>
+    </main>
     <footer>
-      <button (click)="downloadAll()" class="btn btn-lg btn-info">Download all files</button>
+      <button [disabled]="downloadState !== 'waiting'" (click)="downloadAll()" class="btn btn-lg btn-info">Download all
+        files</button>
     </footer>
   </ng-container>
-  <ng-template #loading>
-    <div class="spinner-border" role="status"></div>
-  </ng-template>
 </div>
+<ng-template #loading>
+  <div class="spinner-border" role="status"></div>
+</ng-template>
+<ng-template #zipping>
+  <h4>Zipping your important stuff...</h4>
+  <progressbar [value]='downloadState'></progressbar>
+</ng-template>

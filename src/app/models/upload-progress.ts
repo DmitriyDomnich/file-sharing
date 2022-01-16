@@ -1,6 +1,6 @@
 export interface UploadProgress {
   progress: number;
-  fileName: string;
+  fileName?: string;
   index: number;
   isUploaded: boolean;
 }

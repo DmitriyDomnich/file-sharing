@@ -64,7 +64,7 @@ export class ShareButtonComponent implements OnInit {
         next: fileUpload => {
           if (fileUpload) {
             const [uploadTaskSnapshot, fileWithDescription] = fileUpload;
-            const uploadProgress = (uploadTaskSnapshot.bytesTransferred / uploadTaskSnapshot.totalBytes) * 100;
+            const uploadProgress = uploadTaskSnapshot.bytesTransferred / uploadTaskSnapshot.totalBytes * 100;
 
             this.fileUploadService.updateProgress.emit({
               fileName: fileWithDescription.file.name,

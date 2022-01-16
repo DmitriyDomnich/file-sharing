@@ -20,12 +20,13 @@ export class FileUploaderComponent implements OnInit, AfterViewInit, OnDestroy {
   disabled$: Observable<File[]> = of([]).pipe(share());
   filesWithDescriptions: FileWithDescription[];
   presentFiles: File[] = [];
-
+  uploadingFiles = false;
 
   fileInputSub: Subscription;
 
   uploadEnded() {
     this.setUploadState('waiting');
+    this.uploadingFiles = false;
   }
   fileUploaded(uploadedFileIndex: number) {
     this.fileList.nativeElement.children.item(uploadedFileIndex).scrollIntoView({
@@ -34,13 +35,12 @@ export class FileUploaderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.fileItemComponents.get(uploadedFileIndex).state = 'uploaded';
   }
   getFilesDescriptions(): void {
+    this.uploadingFiles = true;
     this.setUploadState('uploading');
-    this.filesWithDescriptions = this.fileItemComponents
-      .toArray()
-      .map(fileItemComponent => ({
-        file: fileItemComponent.file,
-        description: fileItemComponent.description
-      }));
+    this.filesWithDescriptions = this.fileItemComponents.toArray().map(fileItemComponent => ({
+      file: fileItemComponent.file,
+      description: fileItemComponent.description
+    }));
   }
   fileIsBeingRenamed(renamingFile: File) {
     this.disabled$.subscribe(disabledFiles => {
