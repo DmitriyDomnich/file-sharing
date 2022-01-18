@@ -83,9 +83,7 @@ export class FileUploaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
       setTimeout(() => this.fileList.nativeElement.children
         .item(this.fileList.nativeElement.children.length - 1)
-        .scrollIntoView({
-          behavior: 'smooth',
-        })
+        .scrollIntoView(false)
       );
     });
   }

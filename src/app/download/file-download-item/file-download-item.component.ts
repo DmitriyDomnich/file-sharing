@@ -21,6 +21,11 @@ export class FileDownloadItemComponent implements OnInit, OnDestroy {
     private downloadService: DownloadService
   ) { }
 
+
+  onDownloadProgress(downloadProgress: number) {
+    this.downloadProgress = downloadProgress;
+  }
+
   ngOnInit(): void {
     this.fileDownloadProgressSub = this.downloadService.fileDownload.pipe(
       filter(fileDownloadProgress => fileDownloadProgress.index === this.index)
@@ -32,12 +37,8 @@ export class FileDownloadItemComponent implements OnInit, OnDestroy {
         console.log('completed');
       }
     });
-
   }
   ngOnDestroy(): void {
     this.fileDownloadProgressSub?.unsubscribe();
-  }
-  onDownloadProgress(downloadProgress: number) {
-    this.downloadProgress = downloadProgress;
   }
 }

@@ -1,4 +1,4 @@
-<span>{{file.name}}</span> - <span *ngIf="file.description">{{file.description}}</span> <span><i
-    (downloadProgress)='onDownloadProgress($event)' [download]='{downloadUrl: file.downloadUrl, fileName: file.name}'
-    class="bi bi-file-earmark-arrow-down"></i></span>
+<span>{{file.name}}</span> - <span *ngIf="file.description">{{file.description}}</span>
+<span [title]="'Download ' + file.name"><i (downloadProgress)='onDownloadProgress($event)'
+    [download]='{downloadUrl: file.downloadUrl, fileName: file.name}' class="bi bi-file-earmark-arrow-down"></i></span>
 <progressbar *ngIf="downloadProgress" [value]="downloadProgress"></progressbar>

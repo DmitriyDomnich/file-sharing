@@ -1,6 +1,8 @@
-span>i {
-  cursor: pointer;
-  &:hover {
-    color: #b61717;
+span {
+  &>i {
+    cursor: pointer;
+    &:hover {
+      color: #b61717;
+    }
   }
 }

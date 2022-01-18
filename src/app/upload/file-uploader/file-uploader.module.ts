@@ -8,10 +8,10 @@ import { FormsModule } from '@angular/forms';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { UploadInfoComponent } from './upload-info/upload-info.component';
-import { SizePipe } from './size.pipe';
 import { ControlsModule } from '../../controls/controls.module';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { PopoverModule } from 'ngx-bootstrap/popover';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +19,6 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
     FileItemComponent,
     ShareButtonComponent,
     UploadInfoComponent,
-    SizePipe
   ],
   imports: [
     CommonModule,
@@ -29,7 +28,8 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
     ProgressbarModule,
     ControlsModule,
     ClipboardModule,
-    PopoverModule
+    PopoverModule,
+    SharedModule
   ],
   exports: [FileUploaderComponent],
 })
