@@ -27,9 +27,6 @@ export class DownloadComponent implements OnInit {
   id: string;
   files$: Observable<FileToDownload[]>;
 
-  getExtension(fileName: string) {
-    return fileName.substring(fileName.lastIndexOf('.') + 1);
-  }
   downloadAll() {
     const jsZip = new JSZip();
     this.downloadState = 'downloads_one_by_one';

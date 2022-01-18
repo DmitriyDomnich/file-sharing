@@ -6,3 +6,11 @@ span {
     }
   }
 }
+:host {
+  position: relative;
+}
+
+img {
+  max-width: 70vw;
+  max-height: 90vh;
+}

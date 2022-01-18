@@ -1,4 +1,12 @@
-<span>{{file.name}}</span> - <span *ngIf="file.description">{{file.description}}</span>
+<span
+  [demoImage]='{ template: demoImage, context: { downloadUrl: file.downloadUrl }, extension: getExtension(file.name) }'>
+  {{file.name}}
+</span>
+- <span *ngIf="file.description">{{file.description}}</span>
 <span [title]="'Download ' + file.name"><i (downloadProgress)='onDownloadProgress($event)'
     [download]='{downloadUrl: file.downloadUrl, fileName: file.name}' class="bi bi-file-earmark-arrow-down"></i></span>
 <progressbar *ngIf="downloadProgress" [value]="downloadProgress"></progressbar>
+
+<ng-template #demoImage let-data>
+  <img [src]='data' alt="preview-image">
+</ng-template>

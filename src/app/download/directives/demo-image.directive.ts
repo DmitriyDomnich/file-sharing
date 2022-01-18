@@ -1,4 +1,5 @@
-import { Directive, HostListener, Input, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Directive, HostBinding, HostListener, Input, OnInit, TemplateRef } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { imageExtensions } from 'src/app/models/image-extensions';
 
 @Directive({
@@ -6,28 +7,32 @@ import { imageExtensions } from 'src/app/models/image-extensions';
 })
 export class DemoImageDirective implements OnInit {
 
-  @Input('demoImage') templateRef: {
+  @Input('demoImage') demoImageObject: {
     template: TemplateRef<any>,
     context: {
-      $implicit: string
+      downloadUrl: string
     },
     extension: string
   };
+
   private isImage: boolean;
 
   constructor(
-    private viewContainerRef: ViewContainerRef
+    private dialogRef: MatDialog
   ) { }
 
   ngOnInit(): void {
-    this.isImage = imageExtensions.includes(this.templateRef.extension);
+    this.isImage = imageExtensions.includes(this.demoImageObject.extension);
   }
-  @HostListener('mouseover') onMouseOver() {
-    if (this.isImage)
-      this.viewContainerRef.createEmbeddedView(this.templateRef.template, this.templateRef.context);
+  @HostBinding('style.cursor') get getCursor() {
+    return this.isImage ? 'pointer' : 'text';
   }
-  @HostListener('mouseleave') onMouseLeave() {
-    if (this.isImage)
-      this.viewContainerRef.clear();
+  @HostListener('click') onClick() {
+    if (this.isImage) {
+      this.dialogRef.open(this.demoImageObject.template, {
+        data: this.demoImageObject.context.downloadUrl,
+      });
+    }
   }
+
 }

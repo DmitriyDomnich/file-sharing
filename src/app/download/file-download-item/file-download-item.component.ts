@@ -21,7 +21,9 @@ export class FileDownloadItemComponent implements OnInit, OnDestroy {
     private downloadService: DownloadService
   ) { }
 
-
+  getExtension(fileName: string) {
+    return fileName.substring(fileName.lastIndexOf('.') + 1);
+  }
   onDownloadProgress(downloadProgress: number) {
     this.downloadProgress = downloadProgress;
   }

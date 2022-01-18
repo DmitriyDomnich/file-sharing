@@ -9,9 +9,7 @@
     <main>
       <ol *ngIf="!(downloadState >= 0); else zipping">
         <li *ngFor="let file of files; let i = index">
-          <file-download-item [index]='i' [file]='file'
-            [demoImage]='{ template: demoImage, context: { downloadUrl: file.downloadUrl }, extension: getExtension(file.name) }'>
-          </file-download-item>
+          <file-download-item [index]='i' [file]='file'></file-download-item>
         </li>
       </ol>
     </main>
@@ -22,9 +20,6 @@
   </ng-container>
 </div>
 
-<ng-template #demoImage let-downloadUrl=downloadUrl>
-  <img [src]='downloadUrl' alt="image">
-</ng-template>
 
 <ng-template #loading>
   <div class="spinner-border" role="status"></div>

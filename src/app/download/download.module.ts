@@ -9,15 +9,17 @@ import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { FileDownloadItemComponent } from './file-download-item/file-download-item.component';
 import { DownloadInfoComponent } from './download-info/download-info.component';
 import { DemoImageDirective } from './directives/demo-image.directive';
-
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
-  declarations: [DownloadComponent, SafePipe, DownloadDirective, FileDownloadItemComponent, DownloadInfoComponent, DemoImageDirective],
+  declarations: [DownloadComponent, SafePipe, DownloadDirective,
+    FileDownloadItemComponent, DownloadInfoComponent, DemoImageDirective],
   imports: [
     CommonModule,
     DownloadRoutingModule,
     SharedModule,
-    ProgressbarModule
+    ProgressbarModule,
+    MatDialogModule
   ]
 })
 export class DownloadModule { }
