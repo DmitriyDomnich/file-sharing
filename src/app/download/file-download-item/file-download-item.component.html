@@ -2,7 +2,8 @@
   [demoImage]='{ template: demoImage, context: { downloadUrl: file.downloadUrl }, extension: getExtension(file.name) }'>
   {{file.name}}
 </span>
-<div class="icons" [style.justify-content]="file.description ? 'space-between' : 'center'">
+<div class="icons" [style.height]="file.description ? 'auto' : '100%'"
+  [style.justify-content]="file.description ? 'space-between' : 'center'">
   <span [title]="'Download ' + file.name"><i (downloadProgress)='onDownloadProgress($event)'
       [download]='{downloadUrl: file.downloadUrl, fileName: file.name}'
       class="bi bi-file-earmark-arrow-down"></i></span>

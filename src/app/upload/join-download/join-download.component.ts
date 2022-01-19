@@ -11,6 +11,13 @@ export class JoinDownloadComponent implements OnInit {
 
   @ViewChild('input') input: ElementRef<HTMLInputElement>;
 
+  onPaste(ev: ClipboardEvent) {
+    ev.preventDefault();
+
+    const slicedId = ev.clipboardData.getData('text/plain').slice(-25);
+    this.input.nativeElement.value = slicedId;
+  }
+
   joinDownload(ev: SubmitEvent) {
     ev.preventDefault();
 

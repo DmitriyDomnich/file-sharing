@@ -9,6 +9,7 @@ import { FileUploadService } from '../services/file-upload.service';
 import { UploadState } from "src/app/models/upload-state";
 import { Clipboard } from '@angular/cdk/clipboard';
 import { PopoverDirective } from 'ngx-bootstrap/popover';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'share-button',
@@ -37,7 +38,7 @@ export class ShareButtonComponent implements OnInit {
   }
   share() {
     this.getFilesDescriptions.emit();
-    this.filesLink = v4().slice(0, 25);
+    this.filesLink = this.router.url + v4().slice(0, 25);
 
     this.state = 'uploading';
     this.currentUploadingFile$ = this.fileUploadService.uploadingFile;
@@ -92,7 +93,8 @@ export class ShareButtonComponent implements OnInit {
   constructor(
     private storage: AngularFireStorage,
     private fileUploadService: FileUploadService,
-    private clipboard: Clipboard) { }
+    private clipboard: Clipboard,
+    private router: Router) { }
 
   ngOnInit(): void {
   }

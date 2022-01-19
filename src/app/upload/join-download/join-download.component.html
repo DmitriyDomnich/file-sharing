@@ -1,5 +1,5 @@
 <form (submit)="joinDownload($event)">
   <label for="room">Enter id</label>
-  <input required #input autocomplete="off" type="text" name="room">
+  <input [maxLength]="25" (paste)="onPaste($event)" required #input autocomplete="off" type="text" name="room">
   <button type="submit" class="btn btn-info">Join</button>
 </form>
