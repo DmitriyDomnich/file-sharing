@@ -5,13 +5,13 @@ import { FileItemComponent } from './file-item/file-item.component';
 import { ShareButtonComponent } from './share-button/share-button.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { FormsModule } from '@angular/forms';
-import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { UploadInfoComponent } from './upload-info/upload-info.component';
 import { ControlsModule } from '../../controls/controls.module';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
 
 @NgModule({
   declarations: [

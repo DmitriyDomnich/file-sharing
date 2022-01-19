@@ -16,6 +16,7 @@ export class FileDownloadItemComponent implements OnInit, OnDestroy {
 
   downloadProgress: number;
   fileDownloadProgressSub: Subscription;
+  isCollapsed = true;
 
   constructor(
     private downloadService: DownloadService

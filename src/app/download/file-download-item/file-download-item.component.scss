@@ -1,14 +1,45 @@
-span {
-  &>i {
-    cursor: pointer;
-    &:hover {
-      color: #b61717;
+@use 'variables' as *;
+
+:host {
+  position: relative;
+  display: block;
+  line-height: 1.5;
+  .file-name {
+    display: block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    line-height: 1.75;
+  }
+  .description {
+    color: #1D1E2C;
+  }
+  .icons {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: -.9em;
+    top: 0;
+    line-height: 1.35;
+  }
+  .info {
+    line-height: 0.2;
+    font-size: .8rem;
+    overflow: hidden;
+  }
+  p {
+    margin-top: .3em;
+  }
+  span {
+    &>i {
+      cursor: pointer;
+      &:hover {
+        color: #b61717;
+      }
     }
   }
 }
-:host {
-  position: relative;
-}
+
 
 img {
   max-width: 70vw;

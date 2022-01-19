@@ -15,49 +15,65 @@
   .wrapper {
     position: relative;
     background-color: $cool-grey;
-    height: 60vh;
+    height: 75vh;
+    min-height: 20em;
     margin: 1em;
     border-radius: 20px;
-    min-width: 450px;
-    max-width: 600px;
-    width: 50vw;
+    width: clamp(350px, 50vw, 550px);
     display: flex;
     flex-direction: column;
     align-items: center;
     box-shadow: 0 0 10px 5px rgba(25, 25, 25, 0.486);
     font-size: 1.3em;
+    .zipping {
+      text-align: center;
+      margin: 1em;
+      progressbar {
+        margin-inline: auto;
+        width: 80%;
+      }
+    }
     header {
       position: relative;
-      margin: .5em;
+      padding: .5rem .5rem .25rem;
       border-bottom: 2px solid $liberty;
       width: 100%;
       text-align: center;
     }
     main {
-      padding: 0 .5em 0 1.5em;
+      position: relative;
+      flex-grow: 1;
       min-height: 5em;
-      max-height: calc(90% - 3.1em);
+      width: 100%;
+      max-height: calc(100% - 5px - 1.3em - .75rem - 3em - 2px);
       ol {
         height: 100%;
         overflow: auto;
         @include scrollBar(.3em);
-        padding-bottom: .5em;
+        li {
+          width: calc(100% - 1em);
+          padding-bottom: 0.35rem;
+        }
+        li:not(li:last-child) {
+          border-bottom: 2px solid $imperial-red;
+        }
       }
+    }
+    footer {
+      z-index: 1;
+      position: absolute;
+      display: flex;
+      align-items: center;
+      height: 3em;
+      justify-content: center;
+      width: 100%;
+      bottom: 0;
+      border-top: 2px solid $liberty;
     }
     .spinner-border {
       margin: auto 0;
       height: 3em;
       width: 3em;
-    }
-    footer {
-      position: absolute;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      bottom: 0;
-      min-height: 3em;
-      border-top: 2px solid $liberty;
     }
   }
 }

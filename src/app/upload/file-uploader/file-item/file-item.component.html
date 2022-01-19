@@ -8,7 +8,7 @@
 <div id="collapse-content" [collapse]="!isCollapsed" [isAnimated]="true">
   <div class="input-group">
     <span class="input-group-text">Description</span>
-    <textarea #textarea [(ngModel)]="description" maxlength="100" class="form-control"></textarea>
+    <textarea autofocus #textarea [(ngModel)]="description" maxlength="100" class="form-control"></textarea>
     <span>{{textarea.value.length}}/100</span>
   </div>
 </div>

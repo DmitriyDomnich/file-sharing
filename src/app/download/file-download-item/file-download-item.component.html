@@ -1,11 +1,30 @@
-<span
+<span class="file-name" [title]="file.name"
   [demoImage]='{ template: demoImage, context: { downloadUrl: file.downloadUrl }, extension: getExtension(file.name) }'>
   {{file.name}}
 </span>
-- <span *ngIf="file.description">{{file.description}}</span>
-<span [title]="'Download ' + file.name"><i (downloadProgress)='onDownloadProgress($event)'
-    [download]='{downloadUrl: file.downloadUrl, fileName: file.name}' class="bi bi-file-earmark-arrow-down"></i></span>
-<progressbar *ngIf="downloadProgress" [value]="downloadProgress"></progressbar>
+<div class="icons" [style.justify-content]="file.description ? 'space-between' : 'center'">
+  <span [title]="'Download ' + file.name"><i (downloadProgress)='onDownloadProgress($event)'
+      [download]='{downloadUrl: file.downloadUrl, fileName: file.name}'
+      class="bi bi-file-earmark-arrow-down"></i></span>
+  <ng-container *ngIf="file.description">
+    <span title="Description to this file" (click)="isCollapsed = !isCollapsed">
+      <i class="bi bi-card-text"></i>
+    </span>
+  </ng-container>
+</div>
+<div class="info text-truncate">
+  <span>{{file.size | size}}</span>
+  ·
+  <span class="badge bg-primary rounded-pill">{{file.type}}</span>
+</div>
+<ng-container *ngIf="file.description as description">
+  <div class="description" [collapse]="isCollapsed" [isAnimated]="true">
+    {{description}}
+  </div>
+</ng-container>
+<p *ngIf="downloadProgress">
+  <progressbar [value]="downloadProgress"></progressbar>
+</p>
 
 <ng-template #demoImage let-data>
   <img [src]='data' alt="preview-image">
