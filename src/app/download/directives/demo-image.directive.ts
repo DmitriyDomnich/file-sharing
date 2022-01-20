@@ -23,6 +23,10 @@ export class DemoImageDirective implements OnInit {
 
   ngOnInit(): void {
     this.isImage = imageExtensions.includes(this.demoImageObject.extension);
+    if (this.isImage) {
+      const image = new Image();
+      image.src = this.demoImageObject.context.downloadUrl; // preloading image
+    }
   }
   @HostBinding('style.cursor') get getCursor() {
     return this.isImage ? 'pointer' : 'text';
